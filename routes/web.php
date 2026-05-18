@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\OpportunityController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,7 +20,7 @@ Route::middleware(['auth', 'role:organization'])->group(function () {
     Route::get('/organization/dashboard', function () {
         return view('organization.dashboard');
     })->name('organization.dashboard');
-
+Route::resource('opportunities', OpportunityController::class);
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

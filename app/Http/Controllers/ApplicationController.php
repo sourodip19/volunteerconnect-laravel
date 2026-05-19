@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Models\Opportunity;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class ApplicationController extends Controller
 {
     public function store(Opportunity $opportunity)
     {
-        $alreadyApplied = Application::where('user_id', auth()->user()->id)
+        $alreadyApplied = Application::where('user_id', Auth::user()->id)
             ->where('opportunity_id', $opportunity->id)
             ->exists();
 
@@ -19,11 +19,28 @@ class ApplicationController extends Controller
         }
 
         Application::create([
-            'user_id' => auth()->user()->id,
+            'user_id' => Auth::user()->id,
             'opportunity_id' => $opportunity->id,
             'status' => 'pending',
         ]);
 
         return back()->with('success', 'Application submitted successfully.');
     }
+    public function accept(Application $application)
+{
+    $application->update([
+        'status' => 'accepted'
+    ]);
+
+    return back();
+}
+
+public function reject(Application $application)
+{
+    $application->update([
+        'status' => 'rejected'
+    ]);
+
+    return back();
+}
 }

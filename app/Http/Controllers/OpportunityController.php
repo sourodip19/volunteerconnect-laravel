@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Opportunity;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class OpportunityController extends Controller
 {
     public function index()
@@ -28,7 +28,7 @@ return view('opportunities.index', compact('opportunities'));
 
 public function edit(Opportunity $opportunity)
 {
-    if ($opportunity->user_id !== auth()->user()->id) {
+    if ($opportunity->user_id !== Auth::user()->id) {
         abort(403, 'Unauthorized Access');
     }
 
@@ -37,7 +37,7 @@ public function edit(Opportunity $opportunity)
 
 public function update(Request $request, Opportunity $opportunity)
 {
-    if ($opportunity->user_id !== auth()->user()->id) {
+    if ($opportunity->user_id !== Auth::user()->id) {
     abort(403, 'Unauthorized Access');
 }
     $request->validate([
@@ -63,7 +63,7 @@ public function update(Request $request, Opportunity $opportunity)
 
 public function destroy(Opportunity $opportunity)
 {   
-    if ($opportunity->user_id !== auth()->user()->id) {
+    if ($opportunity->user_id !== Auth::user()->id) {
     abort(403, 'Unauthorized Access');
 }
     $opportunity->delete();
@@ -83,7 +83,7 @@ public function destroy(Opportunity $opportunity)
         ]);
 
         Opportunity::create([
-            'user_id' => auth()->id(),
+            'user_id' => Auth::user()->id,
             'title' => $request->title,
             'category' => $request->category,
             'location' => $request->location,

@@ -50,6 +50,33 @@
             <strong>Status:</strong>
             {{ $application->status }}
         </p>
+        @if($application->status === 'pending')
+
+    <form action="{{ route('applications.accept', $application->id) }}"
+          method="POST">
+
+        @csrf
+        @method('PATCH')
+
+        <button type="submit">
+            Accept
+        </button>
+
+    </form>
+
+    <form action="{{ route('applications.reject', $application->id) }}"
+          method="POST">
+
+        @csrf
+        @method('PATCH')
+
+        <button type="submit">
+            Reject
+        </button>
+
+    </form>
+
+@endif
 
         <hr>
 

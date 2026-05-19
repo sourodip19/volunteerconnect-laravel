@@ -35,7 +35,15 @@ Route::middleware(['auth', 'role:organization'])->group(function () {
 
     Route::resource('opportunities', OpportunityController::class)
     ->except(['index', 'show']);
-    
+
+    Route::patch('/applications/{application}/accept',
+    [ApplicationController::class, 'accept'])
+    ->name('applications.accept');
+
+Route::patch('/applications/{application}/reject',
+    [ApplicationController::class, 'reject'])
+    ->name('applications.reject');
+
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

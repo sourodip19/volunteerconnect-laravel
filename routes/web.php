@@ -97,6 +97,10 @@ $pendingApplicants = \App\Models\Application::whereIn(
         [ApplicationController::class, 'reject'])
         ->name('applications.reject');
 
+        Route::get('/applications/{application}/certificate',
+    [ApplicationController::class, 'generateCertificate'])
+    ->name('applications.certificate');
+
 });
 
 
@@ -189,6 +193,14 @@ $rejectedApplications = \App\Models\Application::where(
         [ApplicationController::class, 'index'])
         ->name('applications.index');
 
+
+        Route::get('/my-certificates',
+    [ApplicationController::class, 'certificates'])
+    ->name('applications.certificates');
+
+Route::get('/applications/{application}/download-certificate',
+    [ApplicationController::class, 'downloadCertificate'])
+    ->name('applications.download-certificate');
 });
 
 

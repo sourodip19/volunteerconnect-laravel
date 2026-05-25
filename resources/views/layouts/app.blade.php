@@ -26,33 +26,30 @@
 
                 @auth
 
-                    @if(auth()->user()->role === 'volunteer')
+                 @if(auth()->user()->role === 'volunteer')
 
-                        <a href="{{ route('volunteer.dashboard') }}"
-                           class="text-gray-700 hover:text-indigo-600">
-                            Dashboard
-                        </a>
+    <a href="{{ route('volunteer.dashboard') }}"
+       class="text-gray-700 hover:text-indigo-600">
 
-                        <a href="{{ route('applications.index') }}"
-                           class="text-gray-700 hover:text-indigo-600">
-                            My Applications
-                        </a>
+        Dashboard
 
-                    @endif
+    </a>
 
-                    @if(auth()->user()->role === 'organization')
+    <a href="{{ route('applications.index') }}"
+       class="text-gray-700 hover:text-indigo-600">
 
-                        <a href="{{ route('organization.dashboard') }}"
-                           class="text-gray-700 hover:text-indigo-600">
-                            Dashboard
-                        </a>
+        My Applications
 
-                        <a href="{{ route('opportunities.index') }}"
-                           class="text-gray-700 hover:text-indigo-600">
-                            Opportunities
-                        </a>
+    </a>
 
-                    @endif
+    <a href="{{ route('applications.certificates') }}"
+       class="text-gray-700 hover:text-indigo-600">
+
+        Certificates
+
+    </a>
+
+@endif
 
                     <form method="POST"
                           action="{{ route('logout') }}">

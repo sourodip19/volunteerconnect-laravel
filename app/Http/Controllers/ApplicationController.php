@@ -43,4 +43,12 @@ public function reject(Application $application)
 
     return back();
 }
+public function index()
+{
+    $applications = Application::where('user_id', Auth::id())
+        ->latest()
+        ->get();
+
+    return view('applications.index', compact('applications'));
+}
 }

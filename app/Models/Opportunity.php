@@ -18,6 +18,7 @@ class Opportunity extends Model
         'date',
         'required_volunteers',
         'description',
+        'image',
     ];
 
     public function user()

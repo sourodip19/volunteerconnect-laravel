@@ -1,50 +1,111 @@
-<h1>Edit Opportunity</h1>
+<x-app-layout>
 
-<form action="{{ route('opportunities.update', $opportunity->id) }}" method="POST">
+    <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-2xl p-8">
 
-    @csrf
-    @method('PUT')
+        <h1 class="text-3xl font-bold mb-8">
+            Edit Opportunity
+        </h1>
 
-    <input type="text"
-           name="title"
-           value="{{ $opportunity->title }}"
-           placeholder="Title">
+        <form action="{{ route('opportunities.update', $opportunity->id) }}"
+              method="POST"
+              class="space-y-6">
 
-    <br><br>
+            @csrf
+            @method('PUT')
 
-    <input type="text"
-           name="category"
-           value="{{ $opportunity->category }}"
-           placeholder="Category">
+            <div>
 
-    <br><br>
+                <label class="block text-sm font-semibold mb-2">
+                    Title
+                </label>
 
-    <input type="text"
-           name="location"
-           value="{{ $opportunity->location }}"
-           placeholder="Location">
+                <input type="text"
+                       name="title"
+                       value="{{ $opportunity->title }}"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
 
-    <br><br>
+            </div>
 
-    <input type="date"
-           name="date"
-           value="{{ $opportunity->date }}">
+            <div>
 
-    <br><br>
+                <label class="block text-sm font-semibold mb-2">
+                    Category
+                </label>
 
-    <input type="number"
-           name="required_volunteers"
-           value="{{ $opportunity->required_volunteers }}"
-           placeholder="Required Volunteers">
+                <input type="text"
+                       name="category"
+                       value="{{ $opportunity->category }}"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
 
-    <br><br>
+            </div>
 
-    <textarea name="description">{{ $opportunity->description }}</textarea>
+            <div>
 
-    <br><br>
+                <label class="block text-sm font-semibold mb-2">
+                    Location
+                </label>
 
-    <button type="submit">
-        Update Opportunity
-    </button>
+                <input type="text"
+                       name="location"
+                       value="{{ $opportunity->location }}"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
 
-</form>
+            </div>
+
+            <div>
+
+                <label class="block text-sm font-semibold mb-2">
+                    Date
+                </label>
+
+                <input type="date"
+                       name="date"
+                       value="{{ $opportunity->date }}"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+
+            </div>
+
+            <div>
+
+                <label class="block text-sm font-semibold mb-2">
+                    Required Volunteers
+                </label>
+
+                <input type="number"
+                       name="required_volunteers"
+                       value="{{ $opportunity->required_volunteers }}"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+
+            </div>
+
+            <div>
+
+                <label class="block text-sm font-semibold mb-2">
+                    Description
+                </label>
+
+                <textarea name="description"
+                          rows="6"
+                          class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">{{ $opportunity->description }}</textarea>
+
+            </div>
+
+            <div class="flex gap-4">
+
+                <button type="submit"
+                        class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700">
+                    Update Opportunity
+                </button>
+
+                <a href="{{ route('opportunities.index') }}"
+                   class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</x-app-layout>

@@ -1,127 +1,229 @@
-<h1>Opportunity Details</h1>
+<x-app-layout>
 
-<hr>
+    <div class="bg-white shadow-xl rounded-2xl p-8">
 
-<h2>{{ $opportunity->title }}</h2>
+        <div class="flex justify-between items-start">
 
-<p>
-    <strong>Category:</strong>
-    {{ $opportunity->category }}
-</p>
+            <div>
+                @if($opportunity->image)
 
-<p>
-    <strong>Location:</strong>
-    {{ $opportunity->location }}
-</p>
-
-<p>
-    <strong>Date:</strong>
-    {{ $opportunity->date }}
-</p>
-
-<p>
-    <strong>Required Volunteers:</strong>
-    {{ $opportunity->required_volunteers }}
-</p>
-
-<p>
-    <strong>Description:</strong>
-    {{ $opportunity->description }}
-</p>
-@if(auth()->user()->role === 'organization')
-
-    <hr>
-
-    <h2>Applicants</h2>
-
-    @forelse($opportunity->applications as $application)
-
-        <p>
-            <strong>Name:</strong>
-            {{ $application->user->name }}
-        </p>
-
-        <p>
-            <strong>Email:</strong>
-            {{ $application->user->email }}
-        </p>
-
-        <p>
-            <strong>Status:</strong>
-            {{ $application->status }}
-        </p>
-        @if($application->status === 'pending')
-
-    <form action="{{ route('applications.accept', $application->id) }}"
-          method="POST">
-
-        @csrf
-        @method('PATCH')
-
-        <button type="submit">
-            Accept
-        </button>
-
-    </form>
-
-    <form action="{{ route('applications.reject', $application->id) }}"
-          method="POST">
-
-        @csrf
-        @method('PATCH')
-
-        <button type="submit">
-            Reject
-        </button>
-
-    </form>
+    <img src="{{ asset('storage/' . $opportunity->image) }}"
+         alt="Opportunity Image"
+         class="w-full h-96 object-cover rounded-xl mb-8">
 
 @endif
+                <h1 class="text-4xl font-bold mb-4">
+                    {{ $opportunity->title }}
+                </h1>
 
-        <hr>
+                <div class="space-y-3 text-gray-700">
 
-    @empty
+                    <p>
+                        <strong>Category:</strong>
+                        {{ $opportunity->category }}
+                    </p>
 
-        <p>No applications yet.</p>
+                    <p>
+                        <strong>Location:</strong>
+                        {{ $opportunity->location }}
+                    </p>
 
-    @endforelse
+                    <p>
+                        <strong>Date:</strong>
+                        {{ $opportunity->date }}
+                    </p>
 
-@endif
+                    <p>
+                        <strong>Required Volunteers:</strong>
+                        {{ $opportunity->required_volunteers }}
+                    </p>
 
-@if(session('success'))
-    <p>{{ session('success') }}</p>
-@endif
+                </div>
 
-@if(session('error'))
-    <p>{{ session('error') }}</p>
-@endif
-@if(auth()->user()->role === 'volunteer')
+            </div>
 
-    @php
-        $alreadyApplied = $opportunity->applications
-            ->where('user_id', auth()->user()->id)
-            ->count();
-    @endphp
+            <div>
 
-    @if($alreadyApplied)
+                <span class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-semibold">
+                    Volunteer Opportunity
+                </span>
 
-        <p>
-            You have already applied for this opportunity.
-        </p>
+            </div>
 
-    @else
+        </div>
 
-        <form action="{{ route('applications.store', $opportunity->id) }}"
-              method="POST">
+        <hr class="my-8">
 
-            @csrf
+        <div>
 
-            <button type="submit">
-                Apply Now
-            </button>
+            <h2 class="text-2xl font-bold mb-4">
+                Description
+            </h2>
 
-        </form>
+            <p class="text-gray-700 leading-8">
+                {{ $opportunity->description }}
+            </p>
+
+        </div>
+
+        <!-- Success/Error Messages -->
+
+        <div class="mt-6">
+
+            @if(session('success'))
+
+                <div class="bg-green-100 text-green-700 px-4 py-3 rounded-lg mb-4">
+                    {{ session('success') }}
+                </div>
+
+            @endif
+
+            @if(session('error'))
+
+                <div class="bg-red-100 text-red-700 px-4 py-3 rounded-lg mb-4">
+                    {{ session('error') }}
+                </div>
+
+            @endif
+
+        </div>
+
+        <!-- Volunteer Apply Section -->
+
+        @if(auth()->user()->role === 'volunteer')
+
+            @php
+                $alreadyApplied = $opportunity->applications
+                    ->where('user_id', auth()->id())
+                    ->count();
+            @endphp
+
+            <div class="mt-8">
+
+                @if($alreadyApplied)
+
+                    <div class="bg-yellow-100 text-yellow-700 px-4 py-3 rounded-lg">
+                        You have already applied for this opportunity.
+                    </div>
+
+                @else
+
+                    <form action="{{ route('applications.store', $opportunity->id) }}"
+                          method="POST">
+
+                        @csrf
+
+                        <button type="submit"
+                                class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700">
+                            Apply Now
+                        </button>
+
+                    </form>
+
+                @endif
+
+            </div>
+
+        @endif
+
+    </div>
+
+    <!-- Organization Applicant Section -->
+
+    @if(auth()->user()->role === 'organization')
+
+        <div class="mt-10">
+
+            <h2 class="text-3xl font-bold mb-6">
+                Applicants
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                @forelse($opportunity->applications as $application)
+
+                    <div class="bg-white shadow-md rounded-xl p-6">
+
+                        <h3 class="text-xl font-bold mb-2">
+                            {{ $application->user->name }}
+                        </h3>
+
+                        <p class="text-gray-600 mb-2">
+                            {{ $application->user->email }}
+                        </p>
+
+                        <div class="mb-4">
+
+                            @if($application->status === 'accepted')
+
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                                    Accepted
+                                </span>
+
+                            @elseif($application->status === 'rejected')
+
+                                <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm">
+                                    Rejected
+                                </span>
+
+                            @else
+
+                                <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
+                                    Pending
+                                </span>
+
+                            @endif
+
+                        </div>
+
+                        @if($application->status === 'pending')
+
+                            <div class="flex gap-3">
+
+                                <form action="{{ route('applications.accept', $application->id) }}"
+                                      method="POST">
+
+                                    @csrf
+                                    @method('PATCH')
+
+                                    <button type="submit"
+                                            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                                        Accept
+                                    </button>
+
+                                </form>
+
+                                <form action="{{ route('applications.reject', $application->id) }}"
+                                      method="POST">
+
+                                    @csrf
+                                    @method('PATCH')
+
+                                    <button type="submit"
+                                            class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                                        Reject
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        @endif
+
+                    </div>
+
+                @empty
+
+                    <div class="bg-white shadow-md rounded-xl p-6">
+                        No applications yet.
+                    </div>
+
+                @endforelse
+
+            </div>
+
+        </div>
 
     @endif
 
-@endif
+</x-app-layout>

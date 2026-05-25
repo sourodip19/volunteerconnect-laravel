@@ -1,58 +1,247 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# VolunteerConnect
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+VolunteerConnect is a modern NGO and volunteer management platform built using Laravel 12, Laravel Breeze, Tailwind CSS, and MySQL.
 
-## About Laravel
+The platform connects organizations with volunteers through opportunity postings, applications, approval systems, dashboards, certificate issuance, and more.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Authentication System
 
-## Learning Laravel
+- User Registration
+- Login & Logout
+- Forgot Password
+- Password Reset via Email
+- Secure Password Hashing
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Role-Based Access Control
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+The platform supports 3 user roles:
 
-## Agentic Development
+## Volunteer
+- Browse opportunities
+- Apply for opportunities
+- Track application status
+- View dashboards
+- Download certificates
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Organization
+- Create opportunities
+- Edit/Delete opportunities
+- Manage applicants
+- Accept/Reject volunteers
+- Issue certificates
+
+## Admin
+- Dedicated admin dashboard
+
+---
+
+# Opportunity Management
+
+Organizations can:
+
+- Create volunteer opportunities
+- Upload opportunity images
+- Edit opportunities
+- Delete opportunities
+
+Volunteers can:
+
+- Browse all opportunities
+- Search/filter opportunities
+- View detailed opportunity pages
+
+---
+
+# Application System
+
+Volunteers can:
+
+- Apply for opportunities
+- Prevent duplicate applications
+- Track status:
+  - Pending
+  - Accepted
+  - Rejected
+
+Organizations can:
+
+- Review applicants
+- Accept or reject applications
+
+---
+
+# Certificate System
+
+Organizations can issue certificates to accepted volunteers.
+
+Volunteers can:
+- View issued certificates
+- See certificate details
+- Download PDF certificates
+
+PDF certificates are generated dynamically using Laravel DOMPDF.
+
+---
+
+# Dashboards
+
+## Volunteer Dashboard
+- Total applications
+- Accepted applications
+- Pending applications
+- Rejected applications
+- Recent applications
+- Quick actions
+
+## Organization Dashboard
+- Total opportunities
+- Total applicants
+- Accepted volunteers
+- Pending volunteers
+- Recent opportunities
+- Recent applicants
+
+---
+
+# Search & Filtering
+
+Users can:
+- Search by title
+- Filter by category
+- Filter by location
+
+---
+
+# Tech Stack
+
+## Backend
+- Laravel 12
+- PHP 8.4
+
+## Frontend
+- Blade Templates
+- Tailwind CSS
+- Laravel Breeze
+
+## Database
+- MySQL
+
+## Additional Packages
+- barryvdh/laravel-dompdf
+
+---
+
+# Installation
+
+## Clone Repository
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone <your-repository-url>
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## Install Dependencies
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+composer install
+npm install
+npm run dev
+```
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Environment Setup
 
-## Security Vulnerabilities
+Copy `.env.example`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+cp .env.example .env
+```
 
-## License
+Generate app key:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan key:generate
+```
+
+---
+
+# Database Setup
+
+Update `.env` with your database credentials.
+
+Run migrations:
+
+```bash
+php artisan migrate
+```
+
+---
+
+# Storage Link
+
+```bash
+php artisan storage:link
+```
+
+---
+
+# Start Server
+
+```bash
+php artisan serve
+```
+
+---
+
+# Mail Configuration (Gmail SMTP)
+
+Update `.env`:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=yourgmail@gmail.com
+MAIL_PASSWORD=your_app_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=yourgmail@gmail.com
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+---
+
+# Screenshots
+
+(Add screenshots here)
+
+---
+
+# Future Improvements
+
+- Real-time notifications
+- Chat system
+- Volunteer ratings
+- NGO verification system
+- Dark mode
+- Event attendance tracking
+- QR-based certificate verification
+
+---
+
+# Author
+
+Sourodip Dey
+
+---
+
+# License
+
+This project is open-source and available under the MIT License.
